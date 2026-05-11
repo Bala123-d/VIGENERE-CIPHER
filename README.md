@@ -44,71 +44,27 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 ## PROGRAM
 ```
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-
-// Function to encrypt a message using Vigenere Cipher
-void encrypt(char text[], char key[], char result[]) {
-    int textLen = strlen(text);
-    int keyLen = strlen(key);
-    int i, j = 0;
-
-    for (i = 0; i < textLen; i++) {
-        if (isalpha(text[i])) {
-            char base = isupper(text[i]) ? 'A' : 'a';
-            result[i] = ( (text[i] - base) + (toupper(key[j % keyLen]) - 'A') ) % 26 + base;
-            j++;
-        } else {
-            result[i] = text[i]; // keep spaces/punctuation
-        }
-    }
-    result[i] = '\0';
+#include<stdio.h> 
+#include <string.h>  
+void vigenereCipher(char *text, char *key, int decrypt) {  
+int len = strlen(text), keyLen = strlen(key);  
+for (int i = 0; i < len; i++) {  
+int shift = key[i % keyLen]- 'A';  
+text[i] = 'A' + (text[i]- 'A' + (decrypt ? 26- shift : shift)) % 26;  
+}  
+}  
+int main() {  
+char text[] = "BALA", key[] = "KEY";  
+vigenereCipher(text, key, 0);  
+printf("Encrypted Message: %s\n", text);  
+vigenereCipher(text, key, 1);  
+printf("Decrypted Message: %s\n", text);  
+return 0;  
 }
-
-// Function to decrypt a message using Vigenere Cipher
-void decrypt(char text[], char key[], char result[]) {
-    int textLen = strlen(text);
-    int keyLen = strlen(key);
-    int i, j = 0;
-
-    for (i = 0; i < textLen; i++) {
-        if (isalpha(text[i])) {
-            char base = isupper(text[i]) ? 'A' : 'a';
-            result[i] = ( ( (text[i] - base) - (toupper(key[j % keyLen]) - 'A') + 26 ) % 26 ) + base;
-            j++;
-        } else {
-            result[i] = text[i]; // keep spaces/punctuation
-        }
-    }
-    result[i] = '\0';
-}
-
-int main() {
-    char text[1000], key[100], enc[1000], dec[1000];
-
-    printf("Simulation of Vigenere Cipher\n");
-    printf("Enter the message: ");
-    scanf("%[^\n]", text);   // read full line including spaces
-    getchar();
-    printf("Enter the key: ");
-    scanf("%s", key);
-
-    for (int i = 0; i < strlen(key); i++) key[i] = toupper(key[i]);
-
-    encrypt(text, key, enc);
-    printf("Encrypted text : %s\n", enc);
-
-    decrypt(enc, key, dec);
-    printf("Decrypted text : %s\n", dec);
-
-    return 0;
-}
-
 ```
 
 ## OUTPUT
-<img width="1736" height="1021" alt="Screenshot 2025-09-26 093310" src="https://github.com/user-attachments/assets/4fab680a-7125-4a35-b988-7f1837880f41" />
+<img width="1739" height="586" alt="Screenshot (19)" src="https://github.com/user-attachments/assets/9ced9a66-003f-4b87-a5b7-fe771e437f8a" />
 
 
 
